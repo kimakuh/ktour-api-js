@@ -1,6 +1,6 @@
 //
 //  ktour-api-js
-//	version: 1.0.0
+//	version: 1.1.0
 //
 //  Created by Steve Kim on 5/30/16.
 //  Copyright © 2016 Steve Kim. All rights reserved.
