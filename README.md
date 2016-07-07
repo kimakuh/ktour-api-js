@@ -10,7 +10,7 @@ ktour-api-js is open source to use Korea Tour Api for Javascript.
 
 ```html
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-<script src="<path-to>/ktour-api/ktour-api-1.1.0.js"></script>
+<script src="<path-to>/ktour-api/ktour-api-1.1.1.js"></script>
 ```
 
 #### SetUp
@@ -106,7 +106,7 @@ JQuery
 npm install --save-dev ktour-api-js
 
 // package.json
-"ktour-api-js": "^1.1.0"
+"ktour-api-js": "^1.1.1"
 ```
 
 ## Author

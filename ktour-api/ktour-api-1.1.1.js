@@ -1,6 +1,6 @@
 //
 //  ktour-api-js
-//	version: 1.1.0
+//	version: 1.1.1
 //
 //  Created by Steve Kim on 5/30/16.
 //  Copyright © 2016 Steve Kim. All rights reserved.
@@ -16,7 +16,7 @@
 
 	KTourApiAppCenter.basePath = "http://api.visitkorea.or.kr/openapi/service/rest";
 
-	KTourApiAppCenter.languageType = {
+	KTourApiAppCenter.LanguageType = {
 	    Chs: "ChsService",
 	    Cht: "ChtService",
 	    Eng: "EngService",
@@ -25,6 +25,17 @@
 	    Jpn: "JpnService",
 	    Rus: "RusService",
 	    Spn: "SpnService"
+	};
+
+	KTourApiAppCenter.ContentType = {
+	    Tour: 76,
+	    Cultual: 78,
+	    Event: 85,
+	    Leisure: 75,
+	    Stay: 80,
+	    Shop: 79,
+	    Food: 82,
+	    Traffic: 77
 	};
 
 	KTourApiAppCenter.defaultCenter = function() {
@@ -37,12 +48,12 @@
 	KTourApiAppCenter.prototype = {
 		appName: null,
 		serviceKey: null,
-		lang: KTourApiAppCenter.languageType.Chs,
+		lang: KTourApiAppCenter.LanguageType.Chs,
 
 		call: function(options) {
 			if (this.serviceKey == undefined || this.serviceKey == null || this.serviceKey.length < 1) {
 				options.completion(null, new Error(-1, "SERVICE KEY IS UNDEFINED."));
-				return;
+				return null;
 			}
 
 			var data = options.param.raw();
@@ -51,9 +62,10 @@
 			data.serviceKey = this.serviceKey;
 			data._type = "json";
 
-			$.get({
+			return $.get({
 				url: KTourApiAppCenter.basePath + "/" + this.lang + "/" + options.path,
 				data: data,
+				timeout: 5000,
 				success: function(rs){
 					var result = options.param instanceof KTourApiListParam ? new KTourApiListResult(rs) : new KTourApiResult(rs);
 					if (result.resultCode == 0) {
@@ -103,16 +115,28 @@
     //  Class: KTourApiListParam
     // ================================================================================================
 
-	var KTourApiListParam = function(numOfRows, pageNo, param) {
+	var KTourApiListParam = function(numOfRows, pageNo, param, arrange, listYN) {
 		this.numOfRows = numOfRows;
 		this.pageNo = pageNo;
+		this.arrange = arrange ? arrange : KTourApiListParam.ArrangeType.None;
+		this.listYN = listYN != undefined ? listYN : true;
 
 		KTourApiParam.call(this, param);
+	};
+
+	KTourApiListParam.ArrangeType = {
+        None        : "",
+        Title       : "A",
+        ViewDate    : "B",
+        ModifyDate  : "C",
+        RegistDate	: "D"
 	};
 
 	KTourApiListParam.prototype = new KTourApiParam();
 	KTourApiListParam.prototype.numOfRows = 10;
 	KTourApiListParam.prototype.pageNo = 1;
+	KTourApiListParam.prototype.arrange = KTourApiListParam.ArrangeType.None;
+	KTourApiListParam.prototype.listYN = true;
 
     // ================================================================================================
     //  Class: KTourApiResult

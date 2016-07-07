@@ -5,7 +5,7 @@ QUnit.module("KTourApiAppCenter", function(){
 	KTourApiAppCenter.defaultCenter().setUp(
 		"<Your App Name>", 
 		serviceKey, 
-		KTourApiAppCenter.languageType.Chs);
+		KTourApiAppCenter.LanguageType.Chs);
 
 	QUnit.test("defaultCenter", function(assert){
 		assert.notOk(null, KTourApiAppCenter.defaultCenter());
